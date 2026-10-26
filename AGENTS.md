@@ -70,7 +70,7 @@ integration + 2 extension mirrors), and 60 Python execution scripts.
 | `/seo schema <url>` | Schema.org detection, validation, generation |
 | `/seo sitemap <url>` | XML sitemap analysis or generation |
 | `/seo images <url>` | Image SEO: on-page audit, SERP analysis, file optimization |
-| `/seo geo <url>` | AI Overviews / Generative Engine Optimization |
+| `/seo geo <url>` | China-first GEO (豆包/DeepSeek/通义/Kimi/文心/元宝) |
 | `/seo plan <type>` | Strategic SEO planning |
 | `/seo cluster <keyword>` | SERP-based semantic clustering and content architecture |
 | `/seo sxo <url>` | Search Experience Optimization: page-type analysis, personas |

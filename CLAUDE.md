@@ -36,7 +36,7 @@ claude-seo/
     seo-schema/SKILL.md          # Schema.org markup detection/generation
     seo-sitemap/SKILL.md         # XML sitemap analysis/generation
     seo-images/SKILL.md          # Image optimization analysis
-    seo-geo/SKILL.md             # AI search / GEO optimization
+    seo-geo/SKILL.md             # AI search / GEO (geo-cn: China engines; see README-CN.md)
     seo-agentic/                 # Agent readiness (Lighthouse Agentic Browsing, WebMCP)
       SKILL.md
       references/                # Lighthouse category, access policy, discovery, WebMCP, vendor matrix

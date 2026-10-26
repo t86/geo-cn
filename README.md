@@ -1,16 +1,21 @@
 <!--
-  Claude SEO (claude-seo): free, open-source SEO audit plugin for Claude Code by Agrici Daniel.
-  Technical SEO, Core Web Vitals, E-E-A-T, Schema.org, AI search (GEO), local SEO, e-commerce and international SEO.
-  26 sub-skills and 19 specialist agents. MIT licensed.
+  geo-cn / Claude SEO CN fork: China-first GEO adaptation of AgriciDaniel/claude-seo (MIT).
+  P0 engines: Doubao, DeepSeek, Tongyi, Kimi, Ernie, Yuanbao. See README-CN.md.
+  Upstream SEO suite retained; GEO agent/skill and probes/cn are the primary local changes.
 -->
+
+> **geo-cn (Claude SEO CN fork)** — Local China-first adaptation of [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) (MIT).  
+> Domestic GEO focus: **豆包 / DeepSeek / 通义 / Kimi / 文心 / 元宝** + `probes/cn` stubs.  
+> Chinese overview: [README-CN.md](./README-CN.md) · Changes: [CHANGELOG-CN.md](./CHANGELOG-CN.md).  
+> The sections below are the upstream English README (install / commands still apply).
 
 <img src="assets/readme/v3/hero.svg" width="1200" height="420" alt="Claude SEO: rank in Google, get cited by AI. Three bots climb from #48 to #1 by fixing crawl, speed, schema, AI access and authority, then Google, ChatGPT, Perplexity, Gemini and Claude cite the site." />
 
-<h1 align="center">Claude SEO</h1>
+<h1 align="center">geo-cn <br/><sub>Claude SEO CN fork</sub></h1>
 
 <p align="center">
-  <b>Free, open-source SEO audits inside <a href="https://claude.com/product/claude-code">Claude Code</a>.</b><br />
-  Rank higher in Google and get cited by AI search.
+  <b>China-first GEO fork + upstream free SEO audits for <a href="https://claude.com/product/claude-code">Claude Code</a>.</b><br />
+  Optimize for domestic AI engines; retain full upstream SEO toolkit.
 </p>
 
 <p align="center">
@@ -44,7 +49,7 @@ It checks everything a good SEO consultant would:
 - **Technical SEO.** Crawlability, indexing, sitemaps, robots.txt, redirects, page speed and Core Web Vitals.
 - **Content quality.** E-E-A-T (experience, expertise, authority and trust), thin pages and topic coverage.
 - **Structured data.** Finds, validates and writes Schema.org markup for rich results.
-- **AI search (GEO).** How likely Google AI Overviews, AI Mode, ChatGPT, Perplexity and Gemini are to cite your pages.
+- **AI search (GEO, CN fork).** How likely **豆包 / DeepSeek / 通义 / Kimi / 文心 / 元宝** are to mention or cite you (stubs until live probes are wired). Upstream Google/ChatGPT/Perplexity guidance remains in references.
 - **Local and e-commerce SEO.** Google Business Profile, reviews, map pack, product pages and international sites.
 
 Claude SEO is built from 26 sub-skills and 19 specialist agents, and up to 17 agents work on your site at the same time. Every recommendation explains why it matters and how you will know it worked.
