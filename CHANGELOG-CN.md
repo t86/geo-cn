@@ -1,29 +1,38 @@
 # Changelog (geo-cn)
 
-## 2026-10-26 — China-first GEO fork (local)
-
-基于上游 `AgriciDaniel/claude-seo` 浅克隆本地适配，**未推送到 GitHub**。
+## 2026-10-26 — DeepSeek + 智谱 live probes
 
 ### Added
 
-- `README-CN.md` — 中文说明：分支定位、相对上游差异、探针用法、stub 边界、MIT 致谢
-- `CHANGELOG-CN.md` — 本文件
-- `probes/cn/` — 国内引擎探针契约
-  - `models.py` / `base.py` / `stub_probe.py` / `registry.py` / `cli.py`
-  - `README.md` — 输入输出约定与接入 live adapter 指引
-  - P0 engine IDs: `doubao`, `deepseek`, `tongyi`, `kimi`, `ernie`, `yuanbao`
-- `skills/seo-geo/references/cn-engines-and-crawlers.md` — 国内引擎与 crawler UA 诚实对照
+- `EngineId.ZHIPU = "zhipu"`（七引擎：原六引擎 + 智谱优先）
+- `probes/cn/engines/common.py` — env key、品牌提及/引用判定、urllib JSON HTTP
+- `probes/cn/engines/deepseek_probe.py` — `DEEPSEEK_API_KEY`；`deepseek-flash` chat；可选 Anthropic `web_search_20250305`
+- `probes/cn/engines/zhipu_probe.py` — `ZHIPU_API_KEY` / `BIGMODEL_API_KEY`；`glm-4-flash`（失败再试 `glm-4-air`）+ `web_search`/`search_pro`；失败回退 `/paas/v4/web_search`
+- `registry.refresh_registry()` — 按 env 注册 live 适配器，否则 stub
+- CLI `--live`、`--web-search`、`list-engines --live-status`
 
 ### Changed
 
-- `agents/seo-geo.md` — 改为国内 GEO 专家：六引擎、国内品牌信号、工单输出、探针契约
-- `skills/seo-geo/SKILL.md` — China-first 评分与平台说明；上游 Google/海外材料降为参考
-- `README.md` — 顶部增加 geo-cn / Claude SEO CN fork 标识（保留英文安装与命令）
-- `.claude-plugin/plugin.json` — description 注明 CN GEO fork；保留可安装的插件名兼容
-- Git remote：`origin` 重命名为 `upstream`（指向 AgriciDaniel/claude-seo），便于后续添加自有 fork 为 `origin`
+- `README-CN.md` / `agents/seo-geo.md` / `probes/cn/README.md` — 文档对齐 live 路径
+- 无 key 或 dry_run 时诚实返回 `stub`；假 key 返回 `error`，不伪造 citations
 
-### Not done (intentional)
+### Still stub
 
-- 未登录 `gh`、未创建远程 fork、未 push
-- 未接付费 API / 未宣称 live 引擎实测
-- 未重写其余传统 SEO Agent（technical/content/schema 等仍为上游原文）
+- doubao / tongyi / kimi / ernie / yuanbao
+
+---
+
+## 2026-10-26 — China-first GEO fork
+
+基于上游 `AgriciDaniel/claude-seo` 适配并推送到 [`t86/geo-cn`](https://github.com/t86/geo-cn)。
+
+### Added
+
+- `README-CN.md`、`CHANGELOG-CN.md`
+- `probes/cn/` 契约（models / base / stub / registry / cli）
+- `skills/seo-geo/references/cn-engines-and-crawlers.md`
+
+### Changed
+
+- `agents/seo-geo.md`、`skills/seo-geo/SKILL.md` — 国内六引擎 + 品牌信号
+- Git：`upstream` → AgriciDaniel/claude-seo；`origin` → t86/geo-cn

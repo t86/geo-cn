@@ -14,6 +14,7 @@ class EngineId(str, Enum):
     KIMI = "kimi"
     ERNIE = "ernie"
     YUANBAO = "yuanbao"
+    ZHIPU = "zhipu"  # 智谱 GLM / BigModel (priority live adapter)
 
 
 class ProbeStatus(str, Enum):

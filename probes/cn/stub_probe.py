@@ -7,11 +7,12 @@ from .models import EngineId, ProbeStatus, VisibilityResult
 
 ENGINE_NOTES: dict[EngineId, str] = {
     EngineId.DOUBAO: "Stub only. Wire Bytespider-aware crawl checks + Doubao answer capture later.",
-    EngineId.DEEPSEEK: "Stub only. Official crawler docs sparse; prefer measured chat/search adapters.",
+    EngineId.DEEPSEEK: "Stub only when no DEEPSEEK_API_KEY. Live adapter: api.deepseek.com chat (deepseek-flash); optional Anthropic web_search.",
     EngineId.TONGYI: "Stub only. Consider Qwen API / 通义联网 adapters + YisouSpider robots checks.",
     EngineId.KIMI: "Stub only. Kimi has official SearchBot docs; good first live adapter candidate.",
     EngineId.ERNIE: "Stub only. Prefer Baidu AI search / 文心 adapters + Baiduspider path.",
     EngineId.YUANBAO: "Stub only. Prefer Sogou + WeChat 公众号 distribution signals.",
+    EngineId.ZHIPU: "Stub only when no ZHIPU_API_KEY/BIGMODEL_API_KEY. Live adapter: open.bigmodel.cn chat+web_search (glm-4-flash).",
 }
 
 

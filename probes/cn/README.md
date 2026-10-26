@@ -4,16 +4,17 @@ Part of **geo-cn**, a China-first fork of [AgriciDaniel/claude-seo](https://gith
 
 ## Goal
 
-`query brand/keyword (+ optional URL) → structured visibility result` for domestic P0 engines:
+`query brand/keyword (+ optional URL) → structured visibility result` for domestic engines:
 
-| ID | Product |
-|----|---------|
-| `doubao` | 豆包 |
-| `deepseek` | DeepSeek |
-| `tongyi` | 通义 / Qwen |
-| `kimi` | Kimi |
-| `ernie` | 文心 |
-| `yuanbao` | 元宝 |
+| ID | Product | Live? |
+|----|---------|-------|
+| `doubao` | 豆包 | stub |
+| `deepseek` | DeepSeek | **live** if `DEEPSEEK_API_KEY` |
+| `tongyi` | 通义 / Qwen | stub |
+| `kimi` | Kimi | stub |
+| `ernie` | 文心 | stub |
+| `yuanbao` | 元宝 | stub |
+| `zhipu` | 智谱 GLM | **live** if `ZHIPU_API_KEY` or `BIGMODEL_API_KEY` |
 
 ## Contract
 
@@ -37,26 +38,28 @@ Part of **geo-cn**, a China-first fork of [AgriciDaniel/claude-seo](https://gith
 | `notes` | Human-readable caveats |
 | `error` | Set when `status=error` |
 
-## CLI (stub)
-
-From the repo root (needs Python 3.10+ on `PYTHONPATH=.`):
+## CLI
 
 ```bash
 cd /path/to/geo-cn
-PYTHONPATH=. python -m probes.cn.cli list-engines
-PYTHONPATH=. python -m probes.cn.cli probe --engine kimi --query "某工业软件 是什么" --brand "某工业软件" --json
+PYTHONPATH=. python3 -m probes.cn.cli list-engines --live-status
+PYTHONPATH=. python3 -m probes.cn.cli probe --engine deepseek --query "某工业软件 是什么" --brand "某工业软件" --json
+# measured call:
+PYTHONPATH=. python3 -m probes.cn.cli probe --engine zhipu --query "某工业软件 是什么" --brand "某工业软件" --live --json
 ```
 
-Expected stub output includes `"status": "stub"` and empty `citations`.
+Without `--live`, `dry_run=True` and live adapters still return stub notes.
 
-## Plugging a real adapter
+### Env
 
-1. Implement `EngineProbe` (see `base.py`) for one engine — API, browser automation, or partner SoV feed.
-2. Call `register_probe(YourProbe())` at process start (overrides the stub).
-3. On success set `status=ProbeStatus.MEASURED` and fill citations from the real response only.
-4. Keep robots / crawler analysis in the GEO agent (`agents/seo-geo.md`); probes answer **visibility**, not page scoring.
+- `DEEPSEEK_API_KEY` — DeepSeek chat (`deepseek-flash`); optional `DEEPSEEK_WEB_SEARCH=1` or `--web-search`
+- `ZHIPU_API_KEY` or `BIGMODEL_API_KEY` — 智谱 `glm-4-flash` (+ `glm-4-air` fallback) with `web_search` / `search_pro`
 
-Suggested first live wire: **Kimi** (official SearchBot docs) or a vendor chat API you already have keys for. Browser automation against consumer chat UIs is fragile — treat as last resort and respect ToS.
+## Adapters
+
+- `engines/deepseek_probe.py` — OpenAI-compatible chat; optional Anthropic `web_search_20250305`
+- `engines/zhipu_probe.py` — chat+web_search; fallback `/paas/v4/web_search`
+- `registry.refresh_registry()` — re-bind stubs vs live from current env
 
 ## Related
 

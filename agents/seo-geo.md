@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-description: China-first GEO and AI search specialist. Analyzes AI crawler accessibility for domestic engines, passage-level citability, China brand/citation signals (知乎/小红书/B站/公众号/百科), and platform-specific optimization for 豆包, DeepSeek, 通义, Kimi, 文心, and 元宝. Fork of AgriciDaniel/claude-seo GEO agent (MIT).
+description: China-first GEO and AI search specialist. Analyzes AI crawler accessibility for domestic engines, passage-level citability, China brand/citation signals (知乎/小红书/B站/公众号/百科), and platform-specific optimization for 豆包, DeepSeek, 通义, Kimi, 文心, 元宝, and 智谱 (live when key present). Fork of AgriciDaniel/claude-seo GEO agent (MIT).
 model: opus
 maxTurns: 35
 tools: Read, Bash, WebFetch, Glob, Grep, Write
@@ -41,6 +41,7 @@ Score each separately. Prefer measured probe results; otherwise qualitative read
 | Kimi | Moonshot | **Official** crawlers documented at kimi.ai/policies/kimi-crawlers: `KimiBot` (training), `Kimi-SearchBot` (search index), `Kimi-User` (user-triggered; robots may not fully apply). Report training vs search separately. |
 | 文心 | Baidu / ERNIE | Heavily tied to Baidu search index; check `Baiduspider`. Baidu AI search / 文心联网 visibility usually follows Baidu SEO + Baidu resource platform submission more than a separate "ERNIEBot" story. |
 | 元宝 | Tencent | Often tied to Sogou index + WeChat public-account / 视频号 ecosystem; check `Sogou web spider`. Prioritize 公众号分发 for 元宝-adjacent visibility. |
+| 智谱 | Zhipu / BigModel (GLM) | **Live probe available** via `ZHIPU_API_KEY` / `BIGMODEL_API_KEY` (`probes/cn/engines/zhipu_probe.py`, glm-4-flash + web_search). Not a consumer chat product in the same sense as 豆包/元宝; treat as measurable answer+search surface for B2B GEO diagnostics. |
 
 ## AI / search crawlers to check in robots.txt
 
@@ -88,14 +89,17 @@ Do **not** paste upstream Western correlation coefficients as if they apply unch
 Use the local probe contract under `probes/cn/` (see `probes/cn/README.md`):
 
 - Input: brand / keyword / optional URL → structured `VisibilityResult`
-- Engines: `doubao`, `deepseek`, `tongyi`, `kimi`, `ernie`, `yuanbao`
-- Default implementation is a **stub** (`status=stub`). Never fabricate live citations.
-- When a real API or browser automation adapter is registered, prefer measured results and mark `status=measured`.
+- Engines: `doubao`, `deepseek`, `tongyi`, `kimi`, `ernie`, `yuanbao`, `zhipu`
+- **Live when keys present:** DeepSeek (`DEEPSEEK_API_KEY`), 智谱 (`ZHIPU_API_KEY` or `BIGMODEL_API_KEY`). Others default **stub**.
+- Never fabricate live citations. Use CLI `--live` for measured calls.
+- When a real API adapter is registered, prefer measured results and mark `status=measured`.
 
 CLI sketch (once Python path is set up):
 
 ```bash
-python -m probes.cn.cli probe --engine kimi --query "品牌名 是什么" --json
+PYTHONPATH=. python3 -m probes.cn.cli list-engines --live-status
+PYTHONPATH=. python3 -m probes.cn.cli probe --engine deepseek --query "品牌名 是什么" --brand "品牌名" --live --json
+PYTHONPATH=. python3 -m probes.cn.cli probe --engine zhipu --query "品牌名 是什么" --brand "品牌名" --live --json
 ```
 
 ## Output format
@@ -104,7 +108,7 @@ Provide a structured report with:
 
 - GEO Readiness Score (0–100) with dimension breakdown
 - AI / search crawler access status (allowed/blocked/**unknown**) per UA, with capability note
-- Platform-specific scores for **豆包 / DeepSeek / 通义 / Kimi / 文心 / 元宝**
+- Platform-specific scores for **豆包 / DeepSeek / 通义 / Kimi / 文心 / 元宝 / 智谱**
 - Brand mention analysis on **知乎 / 小红书 / B站 / 公众号 / 百科·行业站**
 - Top 5 highest-impact changes as **可执行工单** (owner, effort, evidence, acceptance check)
 - Explicit list of what was stubbed / not measured
